@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sayang! 💖</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            background: linear-gradient(-45deg, #ff6b9d, #c44569, #f8b500, #feca57, #ff9ff3, #54a0ff);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: white;
+            height: 100vh;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .page.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .page.prev {
+            transform: translateX(-100%);
+        }
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .input-container {
+            position: relative;
+            margin: 1rem 0;
+        }
+        
+        input {
+            padding: 1rem 1.5rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+            width: 300px;
+            text-align: center;
+        }
+        
+        input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        input:focus {
+            outline: none;
+            transform: scale(1.05);
+            border-color: rgba(255,255,255,0.8);
+            box-shadow: 0 0 20px rgba(255,255,255,0.4);
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #ff6b9d, #c44569);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #c44569, #ff6b9d);
+        }
+        
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1000;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 2rem;
+            color: #ff6b9d;
+            animation: floatUp 3s linear infinite;
+            opacity: 0;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(100vh) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+        
+        .cake-container {
+            position: relative;
+            margin: 2rem 0;
+        }
+        
+        .cake {
+            font-size: 8rem;
+            animation: cakeGlow 2s ease-in-out infinite alternate;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .cake:hover {
+            transform: scale(1.1);
+        }
+        
+        @keyframes cakeGlow {
+            from { text-shadow: 0 0 20px #feca57; }
+            to { text-shadow: 0 0 40px #feca57, 0 0 60px #f8b500; }
+        }
+        
+        .candle {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            animation: flicker 1s ease-in-out infinite alternate;
+        }
+        
+        @keyframes flicker {
+            0% { opacity: 1; transform: translateX(-50%) scale(1); }
+            100% { opacity: 0.8; transform: translateX(-50%) scale(1.1); }
+        }
+        
+        .blown {
+            opacity: 0.3;
+            animation: none;
+        }
+        
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            max-width: 800px;
+            animation: photoScramble 0.5s ease-in-out;
+        }
+        
+        @keyframes photoScramble {
+            0% { transform: scale(0) rotate(180deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        
+        .photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+            animation: photoFloat 3s ease-in-out infinite;
+            animation-delay: var(--delay);
+            overflow: hidden;
+        }
+        
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 13px;
+        }
+        
+        @keyframes photoFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+        
+        .final-message {
+            font-family: 'Dancing Script', cursive;
+            font-size: 5rem;
+            text-align: center;
+            animation: finalGlow 2s ease-in-out infinite alternate;
+            margin: 2rem 0;
+        }
+        
+        @keyframes finalGlow {
+            from { 
+                text-shadow: 0 0 20px #ff6b9d; 
+                transform: scale(1);
+            }
+            to { 
+                text-shadow: 0 0 40px #ff6b9d, 0 0 60px #c44569, 0 0 80px #ff9ff3; 
+                transform: scale(1.05);
+            }
+        }
+        
+        .sparkles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .sparkle {
+            position: absolute;
+            color: #feca57;
+            animation: sparkle 2s linear infinite;
+            opacity: 0;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+        
+        .music-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
+        
+        .music-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .music-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            input { width: 250px; font-size: 1rem; }
+            .cake { font-size: 6rem; }
+            .final-message { font-size: 3rem; }
+            .photo { width: 140px; height: 140px; }
+            .photo-grid { 
+                grid-template-columns: repeat(3, 1fr); 
+                max-width: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+    <div class="sparkles" id="sparkles"></div>
+    
+    <div class="music-controls">
+        <button class="music-btn" onclick="toggleMusic()" id="musicBtn">🎵</button>
+    </div>
+    
+    <!-- Page 1: Ask Name -->
+    <div class="page active" id="page1">
+        <h1>💖 Hari Special Ni! 💖</h1>
+        <h2>Sayang masukkan nama sayang, boleh?</h2>
+        <div class="input-container">
+            <input type="text" id="nameInput" placeholder="Tulis nama sayang siniuntuk ..." maxlength="20">
+        </div>
+        <button class="btn" onclick="nextPage()">Tekan Butang ni Sayang ✨</button>
+    </div>
+    
+    <!-- Page 2: Ask Birthday -->
+    <div class="page" id="page2">
+        <h1>🎂 Hari Jadi Magic! 🎂</h1>
+        <h2 id="nameGreeting">Boleh Sayang masukkan hari jadi sayang?</h2>
+        <div class="input-container">
+            <input type="date" id="birthdateInput">
+        </div>
+        <button class="btn" onclick="nextPage()">Tekan button ni Sayang, Cepat!!!!🚀</button>
+    </div>
+    
+    <!-- Page 3: Birthday Celebration -->
+    <div class="page" id="page3">
+        <h1>🎉 Hari Jadi Sayang pula Hari ni.. Yeahh!!!!!!🎉</h1>
+        <h2 id="levelUpMessage">Happy Level Up, Sayanggggg! 🎂✨</h2>
+        <div style="font-size: 4rem; margin: 2rem 0; animation: bounce 2s infinite;">
+            🎈🎊🎁🎈
+        </div>
+        <p style="font-size: 1.5rem; margin: 1rem 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+            Hari ni tanda satu tahun lagi sayang dan sekarang sayang 22 Tahun Sudah💖
+        </p>
+        <button class="btn" onclick="nextPage()">Klik Untuk Buat Wish Sayang! ⭐</button>
+    </div>
+    
+    <!-- Page 4: Ask Wishes -->
+    <div class="page" id="page4">
+        <h1>✨ Wish yang baik2 ya sayang ✨</h1>
+        <h2>Apa wish sayang untuk tahun ni dan akan datang?</h2>
+        <div class="input-container">
+            <input type="text" id="wishInput" placeholder="Bagitau wish dalam hati sayang..." maxlength="100">
+        </div>
+        <button class="btn" onclick="nextPage()">Buat Jadi Kenyataan! 🌟</button>
+    </div>
+    
+    <!-- Page 5: Virtual Cake -->
+    <div class="page" id="page5">
+        <h1>🎉 Time for Cake! 🎉</h1>
+        <h2>Tiup lilin ni sayang!</h2>
+        <div class="cake-container">
+            <div class="cake" id="cake" onclick="blowCandle()">🎂</div>
+            <div class="candle" id="candle">🕯️</div>
+        </div>
+        <p style="font-size: 1.2rem; margin-top: 2rem;">sorry xdak dapat tiup, klik saja...hehehe 💨</p>
+        <button class="btn" id="afterCake" onclick="nextPage()" style="display: none;">See Our Memories! 📸</button>
+    </div>
+    
+    <!-- Page 6: Photo Memories -->
+    <div class="page" id="page6">
+        <h1>📸 Memori terindah sayang 📸</h1>
+        <h2>Hari-hari terindah bagi sayang. Ini gambar sayang yang paling abang suka tengok... Cantik Comel lagi...🌈</h2>
+        <div class="photo-grid">
+            <div class="photo" style="--delay: 0s">
+                <img src="image/WhatsApp Image 2025-07-23 at 00.53.47_80d9951d.jpg" alt="Memory 1">
+            </div>
+            <div class="photo" style="--delay: 0.1s">
+                <img src="image/WhatsApp Image 2025-07-23 at 00.54.31_907dc6a6.jpg" alt="Memory 2">
+            </div>
+            <div class="photo" style="--delay: 0.2s">
+                <img src="image/WhatsApp Image 2025-07-23 at 00.55.23_0dc10ed5.jpg" alt="Memory 3">
+            </div>
+            <div class="photo" style="--delay: 0.3s">
+                <img src="image/WhatsApp Image 2025-07-23 at 00.57.14_0283e630.jpg" alt="Memory 4">
+            </div>
+            <div class="photo" style="--delay: 0.4s">
+                <img src="image/WhatsApp Image 2025-07-23 at 00.57.15_6d852311.jpg" alt="Memory 5">
+            </div>
+            <div class="photo" style="--delay: 0.5s">
+                <img src="image/WhatsApp Image 2025-07-23 at 00.57.15_ea87b3bb.jpg" alt="Memory 6">
+            </div>
+            <div class="photo" style="--delay: 0.6s">
+                <img src="image/WhatsApp Image 2025-07-23 at 00.58.51_003d3aad.jpg" alt="Memory 7">
+            </div>
+            <div class="photo" style="--delay: 0.7s">
+                <img src="image/WhatsApp Image 2025-07-23 at 00.58.51_ea377aff.jpg" alt="Memory 8">
+            </div>
+            <div class="photo" style="--delay: 0.8s">
+                <img src="image/WhatsApp Image 2025-07-23 at 00.58.52_9b458980.jpg" alt="Memory 9">
+            </div>
+            <div class="photo" style="--delay: 0.9s">
+                <img src="image/WhatsApp Image 2025-07-23 at 00.58.52_b129a432.jpg" alt="Memory 10">
+            </div>
+            <div class="photo" style="--delay: 1.0s">
+                <img src="image/WhatsApp Image 2025-07-23 at 01.19.06_b0df24ea.jpg" alt="Memory 11">
+            </div>
+            <div class="photo" style="--delay: 1.1s">
+                <img src="image/WhatsApp Image 2025-07-23 at 01.19.30_d0a5734f.jpg" alt="Memory 12">
+            </div>
+        </div>
+        <button class="btn" onclick="nextPage()">Continue to Apology! 💌</button>
+    </div>
+    
+    <!-- Page 7: Apology Message -->
+    <div class="page" id="page7">
+        <h1>💌 From My Heart 💌</h1>
+        <div style="max-width: 600px; text-align: center; margin: 0 auto;">
+            <h2 style="font-size: 2rem; margin-bottom: 2rem;">My Dearest Sayang...</h2>
+            <p style="font-size: 1.3rem; line-height: 1.6; margin: 1.5rem 0; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                I want to take this moment to sincerely apologize for my mistakes and my cold expressions towards you. 💔
+            </p>
+            <p style="font-size: 1.3rem; line-height: 1.6; margin: 1.5rem 0; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                You deserve all the warmth, love, and kindness in the world, and I'm sorry for the times I fell short of that. 😔
+            </p>
+            <p style="font-size: 1.3rem; line-height: 1.6; margin: 1.5rem 0; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                I promise to be better, to love you more openly, and to always show you how much you mean to me. 💖
+            </p>
+            <p style="font-size: 1.4rem; font-weight: 600; margin: 2rem 0; color: #ffeb3b; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                Please forgive me, my love. You are my everything. 🌟
+            </p>
+        </div>
+        <button class="btn" onclick="nextPage()">Final Message! 💕</button>
+    </div>
+    
+    <!-- Page 8: Final Message -->
+    <div class="page" id="page8">
+        <div class="final-message">
+            Happy Birthday,<br>
+            Sayang! 💖
+        </div>
+        <h2 style="font-size: 1.8rem; margin-top: 2rem;">
+            You make every day magical! ✨<br>
+            I love you more than words can say! 💕<br>
+            <span style="font-size: 1.4rem; color: #ffeb3b;">Here's to another amazing year together! 🥂</span>
+        </h2>
+        <button class="btn" onclick="restartJourney()" style="margin-top: 2rem;">Relive the Magic! 🔄</button>
+    </div>
+    
+    <audio id="birthdayMusic" loop>
+        <source src="sound/Happy Birthday Song!!!.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        let currentPage = 1;
+        let userData = {};
+        let musicPlaying = false;
+        
+        // Create floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = Math.random() > 0.5 ? '💖' : '💕';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            document.getElementById('hearts').appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+        
+        // Create sparkles
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.innerHTML = '✨';
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.top = Math.random() * 100 + 'vh';
+            sparkle.style.animationDelay = Math.random() * 2 + 's';
+            document.getElementById('sparkles').appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 3000);
+        }
+        
+        // Start animations
+        setInterval(createHeart, 300);
+        setInterval(createSparkle, 500);
+        
+        // Function to save wish to localStorage
+        function saveWishToFile(wishText) {
+            const name = userData.name || 'Sayang';
+            const date = new Date().toLocaleString();
+            const newWish = `Wish dari ${name}\nTarikh: ${date}\n\nWish: ${wishText}\n\n---\n\n`;
+            
+            // Get existing wishes from localStorage
+            let existingWishes = localStorage.getItem('wish.txt') || '';
+            
+            // Append new wish to existing wishes
+            const updatedWishes = existingWishes + newWish;
+            
+            // Save back to localStorage
+            localStorage.setItem('wish.txt', updatedWishes);
+            
+            console.log('Wish telah disimpan ke localStorage!');
+        }
+        
+        function nextPage() {
+            const currentPageEl = document.getElementById(`page${currentPage}`);
+            
+            // Validate inputs
+            if (currentPage === 1) {
+                const name = document.getElementById('nameInput').value.trim();
+                if (!name) {
+                    alert('Please enter your beautiful name! 💕');
+                    return;
+                }
+                userData.name = name;
+                document.getElementById('nameGreeting').textContent = `When is your special day, ${name}?`;
+            } else if (currentPage === 2) {
+                const birthdate = document.getElementById('birthdateInput').value;
+                if (!birthdate) {
+                    alert('Please select your birthday! 🎂');
+                    return;
+                }
+                userData.birthdate = birthdate;
+            } else if (currentPage === 4) {
+                const wish = document.getElementById('wishInput').value.trim();
+                if (!wish) {
+                    alert('Please share your wish! ✨');
+                    return;
+                }
+                userData.wish = wish;
+                // Save wish to file
+                saveWishToFile(wish);
+            }
+            
+            // Transition to next page
+            currentPageEl.classList.remove('active');
+            currentPageEl.classList.add('prev');
+            
+            currentPage++;
+            const nextPageEl = document.getElementById(`page${currentPage}`);
+            setTimeout(() => {
+                nextPageEl.classList.add('active');
+            }, 100);
+            
+            // Start music on page 5 (cake page)
+            if (currentPage === 5 && !musicPlaying) {
+                // Note: Add actual birthday song here
+                console.log('🎵 Happy Birthday music would play here!');
+                console.log('Add your favorite birthday song URL to the audio element');
+            }
+        }
+        
+        function blowCandle() {
+            const candle = document.getElementById('candle');
+            const afterCakeBtn = document.getElementById('afterCake');
+            
+            candle.classList.add('blown');
+            candle.innerHTML = '💨';
+            
+            // Create celebration effect
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    createHeart();
+                    createSparkle();
+                }, i * 100);
+            }
+            
+            setTimeout(() => {
+                afterCakeBtn.style.display = 'block';
+                afterCakeBtn.style.animation = 'bounce 1s ease-in-out';
+            }, 1000);
+        }
+        
+        function toggleMusic() {
+            const music = document.getElementById('birthdayMusic');
+            const btn = document.getElementById('musicBtn');
+            
+            if (musicPlaying) {
+                music.pause();
+                btn.innerHTML = '🎵';
+                musicPlaying = false;
+            } else {
+                music.play().catch(e => {
+                    console.log('Music autoplay blocked. User interaction required.');
+                    alert('Click to enable birthday music! 🎵');
+                });
+                btn.innerHTML = '🔇';
+                musicPlaying = true;
+            }
+        }
+        
+        function restartJourney() {
+            // Reset everything
+            currentPage = 1;
+            userData = {};
+            
+            // Reset all pages
+            document.querySelectorAll('.page').forEach((page, index) => {
+                page.classList.remove('active', 'prev');
+                if (index === 0) page.classList.add('active');
+            });
+            
+            // Reset inputs
+            document.getElementById('nameInput').value = '';
+            document.getElementById('birthdateInput').value = '';
+            document.getElementById('wishInput').value = '';
+            document.getElementById('candle').classList.remove('blown');
+            document.getElementById('candle').innerHTML = '🕯️';
+            document.getElementById('afterCake').style.display = 'none';
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                if (currentPage <= 4) {
+                    nextPage();
+                } else if (currentPage === 5 && document.getElementById('candle').classList.contains('blown')) {
+                    nextPage();
+                } else if (currentPage === 6 || currentPage === 7) {
+                    nextPage();
+                }
+            }
+        });
+        
+        // Auto-focus inputs
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                document.getElementById('nameInput').focus();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
